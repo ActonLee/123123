@@ -9,7 +9,7 @@ pipline:
 
 1. use functions in mesh2udf.py to sample point cloud on a mesh and paired with udf value
 
-2. feed an initialised udfnet with pc-udf pair as its input and output, train
+2. initialise an udfnet with pth(N6BADMUAXYXO.pth), feed an initialised udfnet with pc-udf pair as its input and output, train
 
 3. finish training. save the model_dict of the trained udfnet, which is what we need
 
