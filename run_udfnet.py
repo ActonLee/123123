@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # it's very important to adjust epsilon to match the measurement of the hard spaces of the mesh; 
     # and to adjust M to increase the density of pc around the hard spaces
     N = 50000
-    epsilon = 0.035  #0.1
+    epsilon = 0.032  #0.1
     M = 25
     
     netconf = {
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     
     Loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(UDFNet.parameters(), lr=learning_rate)
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[65], gamma=0.3) 
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[65, 120], gamma=0.2) 
 
     UDFNet, optimizer, train_dataloader, scheduler = accelerator.prepare(
         UDFNet, optimizer, train_dataloader, scheduler
@@ -79,7 +79,7 @@ if __name__ == "__main__":
       #if (t % 30 == 0 or t == epochs - 1):
       #  UDFNet.to("cpu")
       #  visualise_prediction(model=UDFNet, epoch=t, exportdir='.', name=file_name, resolution=100, dist_threshold_ratio=5.0)
-       # UDFNet.to("cuda")
+      #  UDFNet.to("cuda")
 
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(UDFNet)
