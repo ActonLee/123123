@@ -208,8 +208,10 @@ class UDFNetwork(nn.Module):
 
             if l < self.num_layers - 2:
                 x = self.activation(x)
-        return torch.cat([self.udf_out(x[:, :1]) / self.scale, x[:, 1:]],
-                         dim=-1)
+
+        return self.udf_out(x) / self.scale ##
+        #return torch.cat([self.udf_out(x[:, :1]) / self.scale, x[:, 1:]],
+        #                 dim=-1)
 
     def udf(self, x):
         return self.forward(x)[:, :1]

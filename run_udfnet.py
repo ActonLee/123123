@@ -28,21 +28,21 @@ if __name__ == "__main__":
     np.random.seed(shuffle_seed)
     batch_size = 512
     learning_rate = 1e-3
-    epochs = 170
+    epochs = 150
 
     # control density of point-clouds
     # it's very important to adjust epsilon to match the measurement of the hard spaces of the mesh; 
     # and to adjust M to increase the density of pc around the hard spaces
-    N = 20000
-    epsilon = 0.04  #0.1
-    M = 15
+    N = 50000
+    epsilon = 0.035  #0.1
+    M = 25
     
     netconf = {
-        'd_out' : 257, 
+        'd_out' : 1, 
         'd_in' : 3,
-        'd_hidden' : 256,
-        'n_layers' : 8,
-        'skip_in' : (4,),
+        'd_hidden' : 128,
+        'n_layers' : 3,
+        'skip_in' : (),
         'multires' : 6,
         'bias' : 0.5,  
         'scale' : 1.0,
@@ -62,6 +62,8 @@ if __name__ == "__main__":
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size)
 
     UDFNet = UDFNetwork(**netconf)
+    UDFNet.load_state_dict(torch.load("./N6BADMUAXYXO.pth"))
+    
     Loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(UDFNet.parameters(), lr=learning_rate)
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.2) 
