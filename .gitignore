@@ -1,2 +1,4 @@
 *.pyc
 **/__pycache__/
+udf_meshes/
+model_dicts/

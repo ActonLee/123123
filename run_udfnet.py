@@ -66,7 +66,7 @@ if __name__ == "__main__":
     
     Loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(UDFNet.parameters(), lr=learning_rate)
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.2) 
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[70,], gamma=0.1) 
 
     UDFNet, optimizer, train_dataloader, scheduler = accelerator.prepare(
         UDFNet, optimizer, train_dataloader, scheduler
