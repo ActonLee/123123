@@ -66,7 +66,7 @@ if __name__ == "__main__":
     
     Loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(UDFNet.parameters(), lr=learning_rate)
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[70,], gamma=0.1) 
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[85], gamma=0.35) 
 
     UDFNet, optimizer, train_dataloader, scheduler = accelerator.prepare(
         UDFNet, optimizer, train_dataloader, scheduler
@@ -76,10 +76,10 @@ if __name__ == "__main__":
       print(f"Epoch {t+1}\n-------------------------------")
       train_loss = train(train_dataloader, UDFNet, Loss_fn, optimizer, accelerator)
       scheduler.step()
-      if (t % 10 == 0 or t == epochs - 1):
-        UDFNet.to("cpu")
-        visualise_prediction(model=UDFNet, epoch=t, exportdir='.', name=file_name, resolution=100, dist_threshold_ratio=5.0)
-        UDFNet.to("cuda")
+      #if (t % 25 == 0 or t == epochs - 1):
+      #  UDFNet.to("cpu")
+      #  visualise_prediction(model=UDFNet, epoch=t, exportdir='.', name=file_name, resolution=100, dist_threshold_ratio=5.0)
+       # UDFNet.to("cuda")
 
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(UDFNet)
